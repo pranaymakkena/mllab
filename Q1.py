@@ -1,6 +1,6 @@
 # 1. Write a python program to compute Central Tendency Measures: Mean, Median, Mode, Measure of Dispersion: Variance, Standard Deviation
 
-import statistics
+import statistics as st
 
 n = int(input("Enter number of values: "))
 
@@ -15,13 +15,13 @@ for i in range(n):
 print("\nData:", data)
 
 # Central Tendency
-mean = statistics.mean(data)
-median = statistics.median(data)
-mode = statistics.mode(data)
+mean = st.mean(data)
+median = st.median(data)
+mode = st.mode(data)
 
 # Dispersion
-variance = statistics.variance(data)
-std_dev = statistics.stdev(data)
+variance = st.variance(data)
+std_dev = st.stdev(data)
 
 print("\n--- Central Tendency ---")
 print("Mean:", mean)

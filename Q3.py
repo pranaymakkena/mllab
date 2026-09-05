@@ -1,5 +1,6 @@
 # 3. Study of Python Libraries for ML application such as Pandas and Matplotlib
 
+import statistics as st
 import pandas as pd
 import matplotlib.pyplot as plt
 

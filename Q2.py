@@ -1,6 +1,6 @@
 # 2. Study of Python Basic Libraries such as Statistics, Math, Numpy and Scipy
 
-import statistics
+import statistics as st
 import math
 import numpy as np
 from scipy import stats
@@ -19,12 +19,12 @@ array = np.array(data)
 
 print("\n--- STATISTICS LIBRARY ---")
 
-print("Mean:", statistics.mean(data))
-print("Median:", statistics.median(data))
+print("Mean:", st.mean(data))
+print("Median:", st.median(data))
 
 if len(data) > 1:
     print("Standard Deviation:",
-          statistics.stdev(data))
+          st.stdev(data))
 
 print("\n--- MATH LIBRARY ---")
 
