@@ -4,11 +4,28 @@ import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
 
-# Independent variable
-X = np.array([1, 2, 3, 4, 5, 6]).reshape(-1, 1)
+n = int(
+    input("Enter number of data points: ")
+)
 
-# Dependent variable
-y = np.array([45, 50, 55, 60, 65, 70])
+x_values = []
+y_values = []
+
+print("\nEnter X values:")
+
+for i in range(n):
+    x = float(input(f"X{i + 1}: "))
+    x_values.append(x)
+
+print("\nEnter Y values:")
+
+for i in range(n):
+    y = float(input(f"Y{i + 1}: "))
+    y_values.append(y)
+
+# Convert to NumPy arrays
+X = np.array(x_values).reshape(-1, 1)
+y = np.array(y_values)
 
 # Create model
 model = LinearRegression()
@@ -16,21 +33,53 @@ model = LinearRegression()
 # Train model
 model.fit(X, y)
 
-# Prediction
+# Predict training values
 y_pred = model.predict(X)
 
-# Display values
-print("Coefficient:", model.coef_[0])
-print("Intercept:", model.intercept_)
+print("\n--- Regression Results ---")
 
-hours = [[7]]
-prediction = model.predict(hours)
+print("Slope:",
+      model.coef_[0])
 
-print("Predicted value for 7:", prediction[0])
+print("Intercept:",
+      model.intercept_)
 
-# Visualization
-plt.scatter(X, y, label="Actual Data")
-plt.plot(X, y_pred, label="Regression Line")
+print("\nPredicted Values:")
+
+for i in range(n):
+
+    print(
+        "X =", x_values[i],
+        "Actual =", y_values[i],
+        "Predicted =", y_pred[i]
+    )
+
+# New prediction
+new_x = float(
+    input("\nEnter X value for prediction: ")
+)
+
+new_prediction = model.predict(
+    [[new_x]]
+)
+
+print(
+    "Predicted Y:",
+    new_prediction[0]
+)
+
+# Graph
+plt.scatter(
+    X,
+    y,
+    label="Actual Data"
+)
+
+plt.plot(
+    X,
+    y_pred,
+    label="Regression Line"
+)
 
 plt.xlabel("X")
 plt.ylabel("Y")

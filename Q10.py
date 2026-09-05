@@ -1,22 +1,54 @@
 # 10. Performance analysis of Classification Algorithms on a specific dataset (Mini Project)
 
-from sklearn.datasets import load_breast_cancer
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler
+import pandas as pd
 
-from sklearn.linear_model import LogisticRegression
-from sklearn.neighbors import KNeighborsClassifier
-from sklearn.tree import DecisionTreeClassifier
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import (
+    train_test_split
+)
 
-from sklearn.metrics import accuracy_score
-import matplotlib.pyplot as plt
+from sklearn.preprocessing import (
+    StandardScaler
+)
 
-# Load dataset
-data = load_breast_cancer()
+from sklearn.linear_model import (
+    LogisticRegression
+)
 
-X = data.data
-y = data.target
+from sklearn.neighbors import (
+    KNeighborsClassifier
+)
+
+from sklearn.tree import (
+    DecisionTreeClassifier
+)
+
+from sklearn.ensemble import (
+    RandomForestClassifier
+)
+
+from sklearn.metrics import (
+    accuracy_score
+)
+
+# Get CSV file from user
+filename = input(
+    "Enter CSV file name: "
+)
+
+# Read dataset
+df = pd.read_csv(filename)
+
+print(
+    "\n--- Dataset ---"
+)
+
+print(df)
+
+# Features
+X = df.iloc[:, :-1]
+
+# Target
+y = df.iloc[:, -1]
 
 # Split dataset
 X_train, X_test, y_train, y_test = train_test_split(
@@ -26,22 +58,34 @@ X_train, X_test, y_train, y_test = train_test_split(
     random_state=42
 )
 
-# Feature scaling
+# Scaling
 scaler = StandardScaler()
 
-X_train = scaler.fit_transform(X_train)
-X_test = scaler.transform(X_test)
+X_train_scaled = scaler.fit_transform(
+    X_train
+)
+
+X_test_scaled = scaler.transform(
+    X_test
+)
 
 # Classification models
 models = {
+
     "Logistic Regression":
-        LogisticRegression(max_iter=5000),
+        LogisticRegression(
+            max_iter=5000
+        ),
 
     "KNN":
-        KNeighborsClassifier(n_neighbors=5),
+        KNeighborsClassifier(
+            n_neighbors=5
+        ),
 
     "Decision Tree":
-        DecisionTreeClassifier(random_state=42),
+        DecisionTreeClassifier(
+            random_state=42
+        ),
 
     "Random Forest":
         RandomForestClassifier(
@@ -50,46 +94,76 @@ models = {
         )
 }
 
-accuracy_results = {}
+results = {}
 
-# Train and evaluate each model
+# Train models
 for name, model in models.items():
 
-    model.fit(X_train, y_train)
+    if name in [
+        "Decision Tree",
+        "Random Forest"
+    ]:
 
-    predictions = model.predict(X_test)
+        model.fit(
+            X_train,
+            y_train
+        )
+
+        prediction = model.predict(
+            X_test
+        )
+
+    else:
+
+        model.fit(
+            X_train_scaled,
+            y_train
+        )
+
+        prediction = model.predict(
+            X_test_scaled
+        )
 
     accuracy = accuracy_score(
         y_test,
-        predictions
+        prediction
     )
 
-    accuracy_results[name] = accuracy
+    results[name] = accuracy
 
-    print(name)
-    print("Accuracy:", accuracy)
-    print()
+    print(
+        "\n" + name
+    )
+
+    print(
+        "Accuracy:",
+        accuracy
+    )
 
 # Find best model
 best_model = max(
-    accuracy_results,
-    key=accuracy_results.get
+    results,
+    key=results.get
 )
 
-print("Best Performing Model:", best_model)
-
-# Visualization
-plt.figure(figsize=(9, 5))
-
-plt.bar(
-    accuracy_results.keys(),
-    accuracy_results.values()
+print(
+    "\n--- Performance Analysis ---"
 )
 
-plt.xlabel("Classification Algorithms")
-plt.ylabel("Accuracy")
-plt.title("Performance Comparison of Classification Algorithms")
+for name, accuracy in results.items():
 
-plt.ylim(0, 1)
+    print(
+        name,
+        ":",
+        accuracy
+    )
 
-plt.show()
+print(
+    "\nBest Performing Algorithm:",
+    best_model
+)
+
+print(
+    "Best Accuracy:",
+    results[best_model]
+)

@@ -3,28 +3,45 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
-# Creating a dataset
-data = {
-    "Student": ["A", "B", "C", "D", "E"],
-    "Marks": [75, 82, 90, 65, 88]
-}
+n = int(input("Enter number of students: "))
+
+names = []
+marks = []
+
+for i in range(n):
+
+    name = input(
+        f"Enter name of student {i + 1}: "
+    )
+
+    mark = float(
+        input(f"Enter marks of {name}: ")
+    )
+
+    names.append(name)
+    marks.append(mark)
 
 # Create DataFrame
+data = {
+    "Student": names,
+    "Marks": marks
+}
+
 df = pd.DataFrame(data)
 
-print("Dataset:")
+print("\n--- Student Data ---")
 print(df)
 
-print("\nDataset Information:")
-print(df.info())
-
-print("\nStatistical Summary:")
+print("\n--- Statistical Summary ---")
 print(df.describe())
 
-# Plotting
+# Plot
 plt.figure(figsize=(8, 5))
 
-plt.bar(df["Student"], df["Marks"])
+plt.bar(
+    df["Student"],
+    df["Marks"]
+)
 
 plt.xlabel("Students")
 plt.ylabel("Marks")

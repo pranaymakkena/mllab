@@ -1,57 +1,115 @@
 # 5. Implementation of Multiple Linear Regression for House Price Prediction using sklearn
 
-import pandas as pd
+import numpy as np
+
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error, r2_score
 
-# Sample house dataset
-data = {
-    "Area": [1000, 1200, 1500, 1800, 2000, 2200, 2500, 2800],
-    "Bedrooms": [2, 2, 3, 3, 4, 4, 4, 5],
-    "Age": [10, 8, 7, 5, 4, 3, 2, 1],
-    "Price": [3000000, 3500000, 4500000, 5200000,
-              6000000, 6500000, 7500000, 8500000]
-}
+n = int(
+    input("Enter number of houses: ")
+)
 
-df = pd.DataFrame(data)
+X = []
+y = []
 
-# Features and target
-X = df[["Area", "Bedrooms", "Age"]]
-y = df["Price"]
+print("\nEnter house details:")
 
-# Split dataset
+for i in range(n):
+
+    print(f"\nHouse {i + 1}")
+
+    area = float(
+        input("Area in sq.ft: ")
+    )
+
+    bedrooms = float(
+        input("Number of bedrooms: ")
+    )
+
+    age = float(
+        input("Age of house: ")
+    )
+
+    price = float(
+        input("House price: ")
+    )
+
+    X.append([
+        area,
+        bedrooms,
+        age
+    ])
+
+    y.append(price)
+
+X = np.array(X)
+y = np.array(y)
+
+# Split data
 X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.25, random_state=42
+    X,
+    y,
+    test_size=0.2,
+    random_state=42
 )
 
 # Create model
 model = LinearRegression()
 
 # Train model
-model.fit(X_train, y_train)
-
-# Prediction
-y_pred = model.predict(X_test)
-
-print("Actual Prices:")
-print(y_test.values)
-
-print("\nPredicted Prices:")
-print(y_pred)
-
-print("\nMean Squared Error:",
-      mean_squared_error(y_test, y_pred))
-
-print("R2 Score:",
-      r2_score(y_test, y_pred))
-
-# Predict a new house
-new_house = pd.DataFrame(
-    [[2100, 4, 3]],
-    columns=["Area", "Bedrooms", "Age"]
+model.fit(
+    X_train,
+    y_train
 )
 
-price = model.predict(new_house)
+# Predict test data
+y_pred = model.predict(
+    X_test
+)
 
-print("\nPredicted House Price:", price[0])
+print("\n--- Model Results ---")
+
+print(
+    "Mean Squared Error:",
+    mean_squared_error(
+        y_test,
+        y_pred
+    )
+)
+
+print(
+    "R2 Score:",
+    r2_score(
+        y_test,
+        y_pred
+    )
+)
+
+# Predict new house
+print("\nEnter details of new house")
+
+area = float(
+    input("Area in sq.ft: ")
+)
+
+bedrooms = float(
+    input("Number of bedrooms: ")
+)
+
+age = float(
+    input("Age of house: ")
+)
+
+new_house = [
+    [area, bedrooms, age]
+]
+
+price = model.predict(
+    new_house
+)
+
+print(
+    "Predicted House Price:",
+    price[0]
+)

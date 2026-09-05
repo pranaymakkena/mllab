@@ -1,33 +1,33 @@
 # 1. Write a python program to compute Central Tendency Measures: Mean, Median, Mode, Measure of Dispersion: Variance, Standard Deviation
 
-import statistics as st
-import numpy as np
+import statistics
 
-# Input data
-data = [12, 15, 18, 20, 22, 15, 18, 25, 30, 15]
+n = int(input("Enter number of values: "))
+
+data = []
+
+print("Enter the values:")
+
+for i in range(n):
+    value = float(input(f"Value {i + 1}: "))
+    data.append(value)
+
+print("\nData:", data)
 
 # Central Tendency
-mean_value = st.mean(data)
-median_value = st.median(data)
-mode_value = st.mode(data)
+mean = statistics.mean(data)
+median = statistics.median(data)
+mode = statistics.mode(data)
 
 # Dispersion
-variance_value = st.variance(data)
-std_deviation = st.stdev(data)
+variance = statistics.variance(data)
+std_dev = statistics.stdev(data)
 
-print("Data:", data)
+print("\n--- Central Tendency ---")
+print("Mean:", mean)
+print("Median:", median)
+print("Mode:", mode)
 
-print("\nCentral Tendency Measures")
-print("Mean:", mean_value)
-print("Median:", median_value)
-print("Mode:", mode_value)
-
-print("\nMeasures of Dispersion")
-print("Variance:", variance_value)
-print("Standard Deviation:", std_deviation)
-
-# Using NumPy
-print("\nUsing NumPy")
-print("Mean:", np.mean(data))
-print("Variance:", np.var(data))
-print("Standard Deviation:", np.std(data))
+print("\n--- Dispersion ---")
+print("Variance:", variance)
+print("Standard Deviation:", std_dev)

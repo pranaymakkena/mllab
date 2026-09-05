@@ -5,34 +5,54 @@ import math
 import numpy as np
 from scipy import stats
 
-data = [10, 20, 30, 40, 50]
+n = int(input("Enter number of values: "))
 
-# Statistics library
-print("STATISTICS LIBRARY")
+data = []
+
+print("Enter the values:")
+
+for i in range(n):
+    value = float(input(f"Value {i + 1}: "))
+    data.append(value)
+
+array = np.array(data)
+
+print("\n--- STATISTICS LIBRARY ---")
+
 print("Mean:", statistics.mean(data))
 print("Median:", statistics.median(data))
-print("Standard Deviation:", statistics.stdev(data))
 
-# Math library
-print("\nMATH LIBRARY")
-print("Square root of 25:", math.sqrt(25))
-print("Factorial of 5:", math.factorial(5))
-print("Value of pi:", math.pi)
-print("Power:", math.pow(2, 3))
+if len(data) > 1:
+    print("Standard Deviation:",
+          statistics.stdev(data))
 
-# NumPy library
-print("\nNUMPY LIBRARY")
-array = np.array(data)
+print("\n--- MATH LIBRARY ---")
+
+number = float(input("Enter a number for Math operations: "))
+
+print("Square Root:", math.sqrt(number))
+print("Square:", math.pow(number, 2))
+print("Factorial:",
+      math.factorial(int(number)))
+
+print("\n--- NUMPY LIBRARY ---")
+
 print("Array:", array)
 print("Mean:", np.mean(array))
 print("Maximum:", np.max(array))
 print("Minimum:", np.min(array))
+print("Variance:", np.var(array))
+print("Standard Deviation:", np.std(array))
 
-# SciPy library
-print("\nSCIPY LIBRARY")
-result = stats.describe(data)
+print("\n--- SCIPY LIBRARY ---")
 
-print("Number of observations:", result.nobs)
-print("Minimum and Maximum:", result.minmax)
+result = stats.describe(array)
+
+print("Number of observations:",
+      result.nobs)
+
+print("Minimum and Maximum:",
+      result.minmax)
+
 print("Mean:", result.mean)
 print("Variance:", result.variance)

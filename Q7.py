@@ -1,44 +1,127 @@
 # 7. Implementation of KNN using sklearn
 
-from sklearn.datasets import load_iris
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler
-from sklearn.neighbors import KNeighborsClassifier
-from sklearn.metrics import accuracy_score, classification_report
+import numpy as np
 
-# Load dataset
-iris = load_iris()
+from sklearn.model_selection import (
+    train_test_split
+)
 
-X = iris.data
-y = iris.target
+from sklearn.preprocessing import (
+    StandardScaler
+)
+
+from sklearn.neighbors import (
+    KNeighborsClassifier
+)
+
+from sklearn.metrics import (
+    accuracy_score
+)
+
+n = int(
+    input("Enter number of samples: ")
+)
+
+X = []
+y = []
+
+print(
+    "\nEnter two features and class:"
+)
+
+for i in range(n):
+
+    print(f"\nSample {i + 1}")
+
+    feature1 = float(
+        input("Feature 1: ")
+    )
+
+    feature2 = float(
+        input("Feature 2: ")
+    )
+
+    label = int(
+        input("Class (0 or 1): ")
+    )
+
+    X.append([
+        feature1,
+        feature2
+    ])
+
+    y.append(label)
+
+X = np.array(X)
+y = np.array(y)
 
 # Split dataset
 X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.2, random_state=42
+    X,
+    y,
+    test_size=0.2,
+    random_state=42
 )
 
 # Feature scaling
 scaler = StandardScaler()
 
-X_train = scaler.fit_transform(X_train)
-X_test = scaler.transform(X_test)
+X_train = scaler.fit_transform(
+    X_train
+)
+
+X_test = scaler.transform(
+    X_test
+)
+
+k = int(
+    input("\nEnter value of K: ")
+)
 
 # Create KNN model
-knn = KNeighborsClassifier(n_neighbors=5)
+model = KNeighborsClassifier(
+    n_neighbors=k
+)
 
 # Train model
-knn.fit(X_train, y_train)
+model.fit(
+    X_train,
+    y_train
+)
 
 # Prediction
-y_pred = knn.predict(X_test)
+prediction = model.predict(
+    X_test
+)
 
-# Results
-print("Accuracy:",
-      accuracy_score(y_test, y_pred))
+print(
+    "\nAccuracy:",
+    accuracy_score(
+        y_test,
+        prediction
+    )
+)
 
-print("\nClassification Report:")
-print(classification_report(
-    y_test,
-    y_pred,
-    target_names=iris.target_names
-))
+# New sample
+print("\nEnter new sample:")
+
+feature1 = float(
+    input("Feature 1: ")
+)
+
+feature2 = float(
+    input("Feature 2: ")
+)
+
+new_sample = scaler.transform(
+    [[feature1, feature2]]
+)
+
+result = model.predict(
+    new_sample
+)
+
+print(
+    "Predicted Class:",
+    result[0]
+)
