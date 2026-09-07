@@ -51,8 +51,11 @@ result = stats.describe(array)
 print("Number of observations:",
       result.nobs)
 
-print("Minimum and Maximum:",
-      result.minmax)
+print(
+    "Minimum and Maximum:",
+    (float(result.minmax[0]),
+     float(result.minmax[1]))
+)
 
 print("Mean:", result.mean)
 print("Variance:", result.variance)
